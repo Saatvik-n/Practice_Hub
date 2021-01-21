@@ -11,14 +11,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
+import java.util.Scanner;
+
 
 /*
 This is the opening window, where you see the question sets
@@ -30,7 +25,6 @@ public class StudyApp extends Application {
     @Override
     public void start(Stage PrimaryStage) throws IOException
     {
-
         //Directory Chooser
         DirectoryChooser directoryChooser = new DirectoryChooser();
         //This is the initial directory from where we take the question sets
@@ -68,7 +62,7 @@ public class StudyApp extends Application {
         mb.getMenus().addAll(file, edit, help);
 
         //Tha main window
-        PrimaryStage.setTitle("Study App 1.1");
+        PrimaryStage.setTitle("Practice Hub");
         Scene s1;
         //gets question list set
         q_sets = (getQuestionSetList(directory));
@@ -81,7 +75,7 @@ public class StudyApp extends Application {
         //Makes the 2nd VBox 'toprow', and adds label
         VBox toprow = new VBox(10);
         toprow.setPadding(new Insets(10, 20, 20, 20));//top, right, bottom, left
-        Label l1 = new Label("Select the question paper");
+        Label l1 = new Label("Select the question set");
         toprow.getChildren().addAll(l1);
 
         //List for question papers
@@ -201,7 +195,27 @@ public class StudyApp extends Application {
             question_sets.getItems().add(items.get(i));
         }
     }
+    private static String getFolderPath () {
+        String result = "";
+        try{
+            File file = new File("./res/config.txt");
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                result = sc.nextLine();
+                System.out.println(result);
+                break;
+            }
+            if (result.trim().equals("")) {
 
+                DirectoryChooser dc = new DirectoryChooser();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("An error has occured in getting the file");
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
         launch(args);
